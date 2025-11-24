@@ -19,39 +19,34 @@ This project includes:
 ## Project Structure
 
 ```
-.
+kepler-exoplanet-classification
 ├── data/
 │   └── cumulative_2025.11.22_15.28.10.csv
 ├── notebooks/
 │   ├── 01_dataset_overview_and_cleaning.ipynb
-│   ├── 02_feature_engineering_and_preparation.ipynb
-│   ├── 03_modeling_and_evaluation.ipynb
-│   └── 04_results_analysis_and_visualization.ipynb
+│   ├── 02_data_exploration.ipynb
+│   └── 03_modeling_and_evaluation.ipynb
 ├── report/
 │   └── kepler_report.pdf
-├── output/
-│   ├── predictions.csv
-│   ├── confusion_matrices/
-│   └── feature_importances.png
 ├── requirements.txt
 └── README.md
 ```
 
 ## Models Used
 
-* Logistic Regression
-* Decision Tree
-* Random Forest
-* Neural Network (1 Hidden Layer)
+* **Logistic Regression (Linear Benchmark):** To establish the linear performance ceiling.
+* **Decision Tree:** To confirm the non-linear nature of the data.
+* **Random Forest:** The final ensemble method.
+* **Neural Network (SHLNN):** Tested as a final non-linear comparison.
 
 ## Results Summary
 
-| Model               | Accuracy | F1-Score |
-| ------------------- | -------- | -------- |
-| Logistic Regression | XX%      | XX       |
-| Decision Tree       | XX%      | XX       |
-| Random Forest       | **XX%**  | **XX**   |
-| Neural Network      | XX%      | XX       |
+| Model               | Accuracy | F1-Score | AUC Score |
+| ------------------- | -------- | -------- | --------- |
+| Logistic Regression | 85.69%   | 0.8204   | 0.9344    |
+| Decision Tree       | 90.45%   | 0.8623   | 0.9570    |
+| Random Forest       | **91.85%**| **0.8818** | **0.9736** |
+| Neural Network      | 89.94%   | 0.8603   | 0.9637    |
 
 *Random Forest achieved the best performance.*
 
@@ -65,6 +60,7 @@ The complete scientific report is available here:
 ## Installation
 
 ```bash
+# It's recommended to create and activate a virtual environment first.
 pip install -r requirements.txt
 ```
 
@@ -80,21 +76,11 @@ From there, proceed through:
 1. **01_dataset_overview_and_cleaning.ipynb**
    Load dataset, inspect columns, handle missing values.
 
-2. **02_feature_engineering_and_preparation.ipynb**
-   Select features, scale/impute values, handle class imbalance.
+2. **02_data_exploration.ipynb**
+   Exploring the features if they are significant to exoplanets or not.
 
 3. **03_modeling_and_evaluation.ipynb**
    Train Logistic Regression, Decision Tree, Random Forest, and Neural Network.
-
-4. **04_results_analysis_and_visualization.ipynb**
-   Generate confusion matrices, feature importance plots, and final predictions.
-
-### **Run requirements**
-
-```bash
-pip install -r requirements.txt
-```
-
 
 ## Dataset
 NASA Kepler KOI cumulative table:
@@ -104,5 +90,6 @@ https://exoplanetarchive.ipac.caltech.edu/
 
 * NASA Exoplanet Archive
 * Kepler Mission Team
-* McCauliff et al. (Random Forest vetting)
+* **Project Methodology and Structure:** Directly inspired by and replicating the approach detailed in the **DataMining** repository by Alberto Monaco: [https://github.com/AlbertoMonaco/DataMining](https://github.com/AlbertoMonaco/DataMining).
+
 

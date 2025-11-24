@@ -178,3 +178,251 @@ Use the ones from the PDF:
 * Shallue & Vanderburg
 * Kaggle repository
 
+
+
+Got you — let’s break this down **cleanly and clearly** so you understand *exactly* why these columns matter and why they’re ideal for exoplanet classification.
+
+These features are **the standard “core” ML features used in exoplanet vetting**, including by NASA pipelines.
+They represent **transit geometry**, **signal quality**, and **stellar properties**, which together determine whether a signal is likely to be a real planet.
+
+---
+
+# ⭐ **Here are the columns and what each represents (simple + why it matters for ML):**
+
+I'll explain each in two lines:
+
+* **What is it?**
+* **Why it's useful for predicting planet vs false positive**
+
+---
+
+# 🌍 **1. `koi_score` — Disposition score**
+
+**What:** NASA's confidence score (0–1) from manual vetting.
+**Why:** Higher score = more likely to be a real planet. Strong predictive feature.
+
+---
+
+# ⚠️ **False Positive Flags**
+
+These four are extremely important — they directly encode *why* a candidate might not be a planet.
+
+---
+
+### **2. `koi_fpflag_nt` — Not Transit-like**
+
+**What:** Flag if the signal doesn’t resemble a transit curve.
+**Why:** If 1 → very likely a false positive.
+
+### **3. `koi_fpflag_ss` — Stellar eclipse**
+
+**What:** Indicates eclipsing binary behavior.
+**Why:** Massive signal depth → likely a binary star, not a planet.
+
+### **4. `koi_fpflag_co` — Centroid Offset**
+
+**What:** Detects shifts in star position during transit.
+**Why:** A shift means the dimming comes from a nearby star → false alarm.
+
+### **5. `koi_fpflag_ec` — Ephemeris Match**
+
+**What:** Signal matches the period of another known binary.
+**Why:** Strong indicator of contamination, not a planet.
+
+---
+
+# 🕒 **Transit Geometry**
+
+These are the “shape” of the transit. Real planets produce clean, predictable shapes.
+
+---
+
+### **6. `koi_period` — Orbital period (days)**
+
+**What:** How long the planet takes to orbit.
+**Why:** Unrealistically short or long periods can indicate noise or stellar activity.
+
+---
+
+### **7. `koi_time0bk` — Transit epoch (BKJD)**
+
+**What:** Reference time when transit occurs.
+**Why:** Helps characterize periodicity consistency → real planets are very regular.
+
+---
+
+### **8. `koi_impact` — Impact parameter**
+
+**What:** How central the transit path is (0 = center, 1 = edge).
+**Why:** Very high values → grazing events → more often false positives.
+
+---
+
+### **9. `koi_duration` — Transit duration (hrs)**
+
+**What:** How long the transit lasts.
+**Why:** Duration must match expected orbital period and star size.
+
+---
+
+### **10. `koi_depth` — Transit depth (ppm)**
+
+**What:** Amount of dimming.
+**Why:** One of the strongest features:
+
+* Deep = binary star
+* Moderate = planet
+* Very small = noise
+
+---
+
+# 🪐 **Planetary parameters**
+
+### **11. `koi_prad` — Planet radius (Earth radii)**
+
+**What:** Estimated radius.
+**Why:** Extremely large radius → not a planet → likely eclipsing binary.
+
+---
+
+### **12. `koi_teq` — Equilibrium temperature (K)**
+
+**What:** Estimated temperature of the planet.
+**Why:** Helps identify if the transit makes physical sense.
+
+---
+
+### **13. `koi_insol` — Insolation flux**
+
+**What:** Energy received from star compared to Earth.
+**Why:** Extreme values sometimes indicate stellar artifacts.
+
+---
+
+# 📡 **Signal Quality Features (VERY IMPORTANT)**
+
+### **14. `koi_model_snr` — Signal-to-noise ratio**
+
+**What:** Strength of the transit signal.
+**Why:** One of the top predictors.
+
+* Low SNR = junk
+* High SNR = strong planet candidate
+
+---
+
+# ⭐ **Stellar properties**
+
+Planet likelihood depends heavily on the star itself.
+
+---
+
+### **15. `koi_steff` — Stellar effective temperature (K)**
+
+Cool vs hot stars affect detectability & planet types.
+
+---
+
+### **16. `koi_slogg` — Stellar surface gravity**
+
+Distinguishes dwarfs vs giants.
+Giants rarely host detectable planets via transits.
+
+---
+
+### **17. `koi_srad` — Stellar radius (solar radii)**
+
+Bigger stars = shallower transits → easier to misclassify.
+
+---
+
+# 🗺️ **Sky location**
+
+### **18. `ra` — Right Ascension**
+
+### **19. `dec` — Declination**
+
+Useful for:
+
+* identifying star clusters (more false positives)
+* cross-matching with Gaia
+* background contamination likelihood
+
+Not the strongest predictors but still helpful.
+
+---
+
+# 🔦 **Brightness**
+
+### **20. `koi_kepmag` — Kepler magnitude (brightness)**
+
+Fainter stars → noisier light curves → more false alarms.
+
+---
+
+# 🎯 **21. `target` — Label (0/1/2)**
+
+This is your encoded target:
+
+* 0 = False Positive
+* 1 = Candidate
+* 2 = Confirmed
+
+---
+
+# 📌 **Why THESE features?**
+
+These 21 features represent the **minimal, scientifically meaningful subset** used by nearly all exoplanet ML papers.
+
+They cover:
+
+| Category             | Meaning                                                   |
+| -------------------- | --------------------------------------------------------- |
+| Transit geometry     | Does the transit look physically real?                    |
+| False positive tests | Does NASA detect signs of contamination?                  |
+| Planet-star relation | Does the radius/duration/depth make sense?                |
+| Stellar context      | Is this the type of star where this transit is plausible? |
+| Photometric SNR      | Is the signal trustworthy?                                |
+
+This set is compact but very powerful.
+
+Most researchers drop 200+ raw Kepler columns and keep only these — because these are the ones that actually help ML distinguish planets from false positives.
+
+---
+
+# 🚀 Want me to generate Notebook 02 next (feature engineering), using ONLY these useful columns?
+
+
+Machine Learning Pipeline (Classification)
+
+Load dataset
+
+Clean and preprocess
+
+EDA
+
+Split into train/test
+
+Scale numeric features
+
+Feature selection (LASSO)
+
+Train model on training set
+
+Evaluate on test set using:
+
+accuracy
+
+precision
+
+recall
+
+F1
+
+AUC
+
+confusion matrix
+
+Interpret results, visualize metrics
+
+Make predictions with final model
