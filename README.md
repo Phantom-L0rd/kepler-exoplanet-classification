@@ -93,3 +93,7 @@ From the interface, proceed through the notebooks in order:
 * **NASA Exoplanet Archive** and **Kepler Mission Team** for providing the data: [DataSource](https://exoplanetarchive.ipac.caltech.edu/).
 * **Project Inspiration:** This project was initiated through the educational guidance of **Dr. Thomas Albin's YouTube channel, Astroniz**: [https://www.youtube.com/c/Astroniz]().
 * **Methodology Source:** The project structure and core replication approach were inspired by the work found in the **DataMining** repository by Alberto Monaco: [https://github.com/AlbertoMonaco/DataMining](https://github.com/AlbertoMonaco/DataMining).
+
+## Author
+Arop Kuol \
+aropk03@gmail.com
