@@ -27,10 +27,15 @@ kepler-exoplanet-classification
 │   ├── 02_data_exploration.ipynb
 │   └── 03_modeling_and_evaluation.ipynb
 ├── report/
-│   └── kepler_report.pdf
+│   └── kepler_exoplanet_classification.pdf
 ├── requirements.txt
 └── README.md
 ```
+### Key Pipeline Steps
+
+* **Feature Selection:** Initial 141 features were reduced to 21 through filtering, then further reduced to 13 high-impact features based on **Decision Tree Feature Importance**.
+* **Preprocessing:** Handled missing values, removed anomalies, applied **Standard Scaling**, and performed a **stratified** train/test split.
+* **Modeling:** Focused on confirming the non-linear relationship in the data, concluding that the **ensemble approach** was superior to both linear and single-layer neural network architectures.
 
 ## Models Used
 
@@ -38,6 +43,8 @@ kepler-exoplanet-classification
 * **Decision Tree:** To confirm the non-linear nature of the data.
 * **Random Forest:** The final ensemble method.
 * **Neural Network (SHLNN):** Tested as a final non-linear comparison.
+
+
 
 ## Results Summary
 
@@ -54,42 +61,35 @@ kepler-exoplanet-classification
 
 The complete scientific report is available here:
 
-**/report/kepler_report.pdf**
+[**/report/kepler_exoplanet_classification.pdf**](report/kepler_exoplanet_classification.pdf)
 
 
 ## Installation
+### 1\. Installation
 
 ```bash
-# It's recommended to create and activate a virtual environment first.
+# It is recommended to create and activate a virtual environment first.
 pip install -r requirements.txt
 ```
 
+### 2\. Usage
 
-## Usage
+You can step through the analysis using the Jupyter notebooks:
 
 ```bash
-jupyter notebook notebooks/01_dataset_overview_and_cleaning.ipynb
+# Start Jupyter Lab
+jupyter lab
 ```
 
-From there, proceed through:
+From the interface, proceed through the notebooks in order:
 
-1. **01_dataset_overview_and_cleaning.ipynb**
-   Load dataset, inspect columns, handle missing values.
+1.  **`01_dataset_overview_and_cleaning.ipynb`**: Load, inspect, and clean the raw dataset; perform initial feature engineering.
+2.  **`02_data_exploration.ipynb`**: Explore the relationships between features and the target disposition.
+3.  **`03_modeling_and_evaluation.ipynb`**: Train all four models, perform Grid Search tuning, and generate final metrics.
 
-2. **02_data_exploration.ipynb**
-   Exploring the features if they are significant to exoplanets or not.
-
-3. **03_modeling_and_evaluation.ipynb**
-   Train Logistic Regression, Decision Tree, Random Forest, and Neural Network.
-
-## Dataset
-NASA Kepler KOI cumulative table:
-https://exoplanetarchive.ipac.caltech.edu/
 
 ## Acknowledgements
 
-* NASA Exoplanet Archive
-* Kepler Mission Team
-* **Project Methodology and Structure:** Directly inspired by and replicating the approach detailed in the **DataMining** repository by Alberto Monaco: [https://github.com/AlbertoMonaco/DataMining](https://github.com/AlbertoMonaco/DataMining).
-
-
+* **NASA Exoplanet Archive** and **Kepler Mission Team** for providing the data: [DataSource](https://exoplanetarchive.ipac.caltech.edu/).
+* **Project Inspiration:** This project was initiated through the educational guidance of **Dr. Thomas Albin's YouTube channel, Astroniz**: [https://www.youtube.com/c/Astroniz]().
+* **Methodology Source:** The project structure and core replication approach were inspired by the work found in the **DataMining** repository by Alberto Monaco: [https://github.com/AlbertoMonaco/DataMining](https://github.com/AlbertoMonaco/DataMining).
